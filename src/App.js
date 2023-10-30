@@ -1,8 +1,10 @@
 import { MissionUtils } from "@woowacourse/mission-utils";
 class App {
   async play() {
-    const cars = await this.getCars();
-    const rounds = await this.getRounds();
+    do {
+      const cars = await this.getCars();
+      const rounds = await this.getRounds();
+    } while (rounds > 0);
   }
   async getCars() {
     const carsInput = await MissionUtils.Console.readLineAsync(
@@ -12,9 +14,11 @@ class App {
     return carsInput;
   }
   carsCheck(carsInput) {
-    const cars = carsInput.split(",").forEach((car) => {
+    const cars = carsInput.split(",").map((car) => {
       if (car.length > 5) throw Error("[ERROR] 숫자가 잘못된 형식입니다.");
+      return { name: car, score: 0 };
     });
+    console.log(cars);
   }
   async getRounds() {
     const roundsInput = await MissionUtils.Console.readLineAsync(
